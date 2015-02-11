@@ -6,7 +6,9 @@ RUN apt-key add /key/raspberrypi.gpg.key
 RUN apt-get update
 RUN apt-get -y upgrade
 
-RUN apt-get -y install pcscd openssl opensc
+RUN apt-get -y install pcscd
+RUN apt-get -y install openssl
+RUN apt-get -y install opensc
 
 #For debugging
 RUN apt-get -y install usbutils tmux vim
