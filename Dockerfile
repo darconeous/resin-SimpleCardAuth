@@ -6,11 +6,14 @@ RUN apt-key add /key/raspberrypi.gpg.key
 RUN apt-get update
 RUN apt-get -y upgrade
 
-RUN apt-get -y install libusb++-0.1-4c2 libccid pcscd libpcsclite1 pcsc-tools libpcsc-perl openssl pcscd pcsc-tools libpam-pkcs11 opensc libengine-pkcs11-openssl
+RUN apt-get -y install pcscd openssl pcsc-tools opensc
+#RUN apt-get -y install libusb++-0.1-4c2 libccid pcscd libpcsclite1 openssl pcscd pcsc-tools opensc libengine-pkcs11-openssl
 #RUN apt-get install libusb-dev libpcsclite-dev libssl-dev libreadline-dev pkg-config coolkey
 RUN echo blacklist pn533 >> /etc/modprobe.d/blacklist-libnfc.conf
 RUN echo blacklist nfc >> /etc/modprobe.d/blacklist-libnfc.conf
 RUN apt-get clean
+
+RUN apt-get -y install build-essential libssl-dev
 ADD SimpleCardAuth /SimpleCardAuth/
 RUN cd SimpleCardAuth && make
 
