@@ -16,6 +16,7 @@ RUN apt-get clean
 RUN apt-get -y install build-essential libssl-dev
 ADD SimpleCardAuth /SimpleCardAuth/
 RUN cd SimpleCardAuth && make
+RUN apt-get -y remove build-essential libssl-dev
 
 RUN echo "/etc/init.d/pcscd start" >> /start
 RUN echo "cd /SimpleCardAuth" >> /start
