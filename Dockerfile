@@ -22,7 +22,8 @@ RUN apt-get clean
 
 
 
-RUN apt-get -y install build-essential libssl-dev
+RUN apt-get -y install build-essential
+RUN apt-get -y install libssl-dev
 ADD SimpleCardAuth /SimpleCardAuth/
 RUN cd SimpleCardAuth && make
 RUN apt-get -y remove build-essential libssl-dev
