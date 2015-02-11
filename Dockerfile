@@ -17,6 +17,9 @@ RUN apt-get -y install build-essential libssl-dev
 ADD SimpleCardAuth /SimpleCardAuth/
 RUN cd SimpleCardAuth && make
 
-RUN echo cd /SimpleCardAuth && ./auth-loop.sh > /start
+RUN echo "/etc/init.d/pcscd start" >> /start
+RUN echo "cd /SimpleCardAuth" >> /start
+RUN echo "./auth-loop.sh" >> /start
+
 RUN chmod +x /start
 
