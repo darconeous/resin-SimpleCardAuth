@@ -19,10 +19,15 @@ RAND_FILE=/dev/urandom
 STDERR=/dev/null
 export OPENSC_CONF=`pwd`/opensc.conf
 
-#PKCS15_CRYPT_FLAGS=-vvv
+if [ "$DEBUG" -gt 2 ]
+then #PKCS15_CRYPT_FLAGS=-vvv
+fi
 
-#STDERR=/dev/stderr
-#set -x
+if [ "$DEBUG" -gt 1 ]
+then
+	STDERR=/dev/stderr
+	set -x
+fi
 
 cleanup() {
 	rm $CHAL_FILE 2> /dev/null

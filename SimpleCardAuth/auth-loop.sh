@@ -1,7 +1,7 @@
 #!/bin/sh
 
 access_denied() {
-	echo Access Denied: $AUTH_DN
+	echo Access Denied: $AUTH_DN | tee -a authlog.txt
 
 	# TODO: Log the incident.
 
@@ -10,7 +10,7 @@ access_denied() {
 }
 
 access_granted() {
-	echo Access Granted: $AUTH_DN
+	echo Access Granted: $AUTH_DN | tee -a authlog.txt
 
 	# TODO: Open the door!
 
@@ -20,7 +20,7 @@ access_granted() {
 
 verify_access() {
 	# TODO: Look up and verify that $AUTH_DN has access to this zone!
-	return 0
+	true
 }
 
 
