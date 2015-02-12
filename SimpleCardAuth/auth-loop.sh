@@ -23,6 +23,7 @@ verify_access() {
 	true
 }
 
+echo Starting Auth Loop
 
 # Main access control loop
 while true ;

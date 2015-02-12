@@ -5,7 +5,6 @@ modprobe -r pn533
 modprobe -r nfc
 /etc/init.d/pcscd start
 
-echo Starting Auth Loop
 cd /SimpleCardAuth
-./auth-loop.sh
+. ./auth-loop.sh
 

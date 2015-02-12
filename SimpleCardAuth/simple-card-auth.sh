@@ -20,7 +20,7 @@ STDERR=/dev/null
 export OPENSC_CONF=`pwd`/opensc.conf
 
 if [ "$DEBUG" -gt 2 ]
-then #PKCS15_CRYPT_FLAGS=-vvv
+then PKCS15_CRYPT_FLAGS=-vvv
 fi
 
 if [ "$DEBUG" -gt 1 ]
