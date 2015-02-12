@@ -24,5 +24,5 @@ RUN apt-get clean
 ADD start /start
 RUN chmod +x /start
 
-
+CMD [ "/bin/sh", "/start" ]
 
