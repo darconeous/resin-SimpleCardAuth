@@ -19,7 +19,7 @@ RUN apt-get update && apt-get -y install pcscd openssl
 ADD SimpleCardAuth /SimpleCardAuth/
 ADD opensc /opensc-source/
 RUN apt-get -y install build-essential libssl-dev libpcsclite-dev && cd SimpleCardAuth && make
-RUN cd opensc-source && ./configure && make install
+RUN cd opensc-source && ./configure --prefix=/usr && make install
 RUN apt-get -y remove build-essential libssl-dev libpcsclite-dev && rm -fr opensc-source
 
 RUN apt-get clean
