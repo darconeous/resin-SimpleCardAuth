@@ -6,7 +6,7 @@ FROM resin/rpi-raspbian:latest
 #RUN apt-get update
 #RUN apt-get -y upgrade
 
-RUN apt-get update && apt-get -y install pcscd openssl opensc
+RUN apt-get update && apt-get -y install pcscd openssl
 
 #For debugging
 #RUN apt-get -y install usbutils tmux vim
@@ -17,7 +17,10 @@ RUN apt-get update && apt-get -y install pcscd openssl opensc
 
 # Build any C-based tools
 ADD SimpleCardAuth /SimpleCardAuth/
-RUN apt-get -y install build-essential libssl-dev && cd SimpleCardAuth && make ; apt-get -y remove build-essential libssl-dev
+ADD opensc /opensc-source/
+RUN apt-get -y install build-essential libssl-dev libpcsclite-dev && cd SimpleCardAuth && make
+RUN cd opensc-source && ./configure && make install
+RUN apt-get -y remove build-essential libssl-dev libpcsclite-dev && rm -fr opensc-source
 
 RUN apt-get clean
 

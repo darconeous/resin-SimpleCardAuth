@@ -1,0 +1,28 @@
+#!/bin/bash
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root:" 1>&2
+   echo "" 1>&2
+   echo "sudo /usr/local/bin/opensc-uninstall" 1>&2
+   exit 1
+fi
+
+# Remove symlinks to commands
+for file in /Library/OpenSC/bin/*; do
+	test -L "/usr/local/bin/$(basename $file)" && rm -f "/usr/local/bin/$(basename $file)"
+done
+
+# Remove symlink for pkcs11
+test -L /usr/lib/opensc-pkcs11.so && rm -f /usr/lib/opensc-pkcs11.so
+
+# Remove installed files
+rm -rf /Library/OpenSC
+rm -rf /System/Library/Security/tokend/OpenSC.tokend
+
+# delete receipts on 10.6+
+for file in /var/db/receipts/org.opensc-project.mac.bom /var/db/receipts/org.opensc-project.mac.plist; do
+	test -f $file && rm -f $file
+done
+
+# remove this script
+rm -f /usr/local/bin/opensc-uninstall
+echo "OpenSC has been removed from your system. See you again!"
