@@ -1,7 +1,7 @@
 #!/bin/sh
 
 access_denied() {
-	echo Access Denied: $AUTH_DN | tee -a authlog.txt
+	echo Access Denied: $AUTH_DN
 
 	# TODO: Log the incident.
 
@@ -10,7 +10,7 @@ access_denied() {
 }
 
 access_granted() {
-	echo Access Granted: $AUTH_DN | tee -a authlog.txt
+	echo Access Granted: $AUTH_DN
 
 	# TODO: Open the door!
 
