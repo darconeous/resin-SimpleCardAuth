@@ -6,24 +6,32 @@ FROM resin/rpi-raspbian:latest
 #RUN apt-get update
 #RUN apt-get -y upgrade
 
-RUN apt-get -y update && apt-get -y install pcscd openssl
+RUN apt-get -y update
+RUN apt-get -y install --fix-missing build-essential
+
+# We will need pcscd and openssl
+RUN apt-get -y install pcscd openssl
+
+# Need the development libraries, too, since we are building stuff.
+RUN apt-get -y install libssl-dev libpcsclite-dev
+
+# Build an updated version of OpenSC
+ADD opensc /opensc-source/
+RUN cd opensc-source && ./configure --prefix=/usr && make install
+RUN rm -fr opensc-source
+
+# Build any C-based tools
+ADD SimpleCardAuth /SimpleCardAuth/
+RUN cd SimpleCardAuth && make
+
+# Add the start script.
+ADD start /start
+RUN chmod +x /start
 
 #For debugging
 #RUN apt-get -y install usbutils tmux vim
 
-# Not sure if this is really necessary...
-#RUN echo blacklist pn533 >> /etc/modprobe.d/blacklist-libnfc.conf
-#RUN echo blacklist nfc >> /etc/modprobe.d/blacklist-libnfc.conf
-
-# Build any C-based tools
-ADD SimpleCardAuth /SimpleCardAuth/
-ADD opensc /opensc-source/
-RUN apt-get -y install --fix-missing build-essential libssl-dev libpcsclite-dev && cd SimpleCardAuth && make
-RUN cd opensc-source && ./configure --prefix=/usr && make install
-RUN apt-get -y remove build-essential libssl-dev libpcsclite-dev && rm -fr opensc-source && apt-get -y autoremove && apt-get -y clean
-
-ADD start /start
-RUN chmod +x /start
+RUN apt-get -y remove build-essential libssl-dev libpcsclite-dev && apt-get -y autoremove && apt-get -y clean
 
 CMD [ "/bin/sh", "/start" ]
 
