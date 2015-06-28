@@ -11,6 +11,7 @@ access_denied() {
 
 	# Beep three times with red LED to indicate failure
 	opensc-tool --send-apdu FF:00:40:5D:04:01:01:03:01 > /dev/null 2> /dev/null
+	
 }
 
 access_granted() {
@@ -34,16 +35,17 @@ verify_access() {
 
 echo $GPIO_PIN > /sys/class/gpio/export
 echo out > $GPIO_PATH/direction
-echo 1 > $GPIO_PATH/value
+echo 0 > $GPIO_PATH/value
 
 echo Starting Auth Loop
 sleep 1
-echo 0 > $GPIO_PATH/value
+echo 1 > $GPIO_PATH/value
 
 
 # Main access control loop
 while true ;
 do
+	echo 1 > $GPIO_PATH/value
 	modprobe -r pn533
 	modprobe -r nfc
 	if AUTH_DN=`./simple-card-auth.sh`
