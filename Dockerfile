@@ -34,8 +34,8 @@ RUN apt-get -y remove build-essential libssl-dev libpcsclite-dev && apt-get -y a
 
 #For debugging
 ADD set_root_pw.sh /set_root_pw.sh
-RUN apt-get -y install apt-utils net-tools
-RUN apt-get -y install usbutils tmux vim openssh-server pwgen && \
+RUN apt-get -y install net-tools
+RUN apt-get -y install openssh-server pwgen && \
 	mkdir -p /var/run/sshd && \
 	sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config && \
 	chmod +x /set_root_pw.sh
