@@ -44,6 +44,8 @@ echo 0 > $GPIO_PATH/value
 # Main access control loop
 while true ;
 do
+	modprobe -r pn533
+	modprobe -r nfc
 	if AUTH_DN=`./simple-card-auth.sh`
 	then if verify_access
 		then access_granted
