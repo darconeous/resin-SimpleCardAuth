@@ -29,6 +29,9 @@ RUN cd SimpleCardAuth && make
 ADD start /start
 RUN chmod +x /start
 
+# Clean-up
+RUN apt-get -y remove build-essential libssl-dev libpcsclite-dev && apt-get -y autoremove && apt-get -y clean
+
 #For debugging
 ADD set_root_pw.sh /set_root_pw.sh
 RUN apt-get -y install apt-utils net-tools
@@ -36,9 +39,8 @@ RUN apt-get -y install usbutils tmux vim openssh-server pwgen && \
 	mkdir -p /var/run/sshd && \
 	sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config && \
 	chmod +x /set_root_pw.sh
+ADD .ssh /root/.ssh/
 EXPOSE 22
-
-RUN apt-get -y remove build-essential libssl-dev libpcsclite-dev && apt-get -y autoremove && apt-get -y clean
 
 CMD [ "/bin/sh", "/start" ]
 

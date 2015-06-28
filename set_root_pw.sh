@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ -f /.root_pw_set ]; then
-	echo "Root password already set!"
-	exit 0
-fi
+#if [ -f /.root_pw_set ]; then
+#	echo "Root password already set!"
+#	exit 0
+#fi
 
 PASS=${ROOT_PASS:-$(pwgen -s 12 1)}
 _word=$( [ ${ROOT_PASS} ] && echo "preset" || echo "random" )
