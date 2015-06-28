@@ -8,7 +8,7 @@ modprobe -r pn533
 modprobe -r nfc
 
 /etc/init.d/pcscd start
-/etc/init.d/sshd start
+/usr/sbin/sshd &
 
 cd /SimpleCardAuth
 ./auth-loop.sh 2>&1 | cat
