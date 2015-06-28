@@ -9,6 +9,7 @@ FROM resin/rpi-raspbian:latest
 RUN apt-get -y update
 RUN apt-get -y install --fix-missing build-essential
 
+
 # We will need pcscd and openssl
 RUN apt-get -y install pcscd openssl
 
@@ -29,7 +30,12 @@ ADD start /start
 RUN chmod +x /start
 
 #For debugging
-#RUN apt-get -y install usbutils tmux vim
+ADD set_root_pw.sh /set_root_pw.sh
+RUN apt-get -y install usbutils tmux vim openssh-server pwgen && \
+	mkdir -p /var/run/sshd && \
+	sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config && \
+	chmod +x /set_root_pw.sh
+EXPOSE 22
 
 RUN apt-get -y remove build-essential libssl-dev libpcsclite-dev && apt-get -y autoremove && apt-get -y clean
 

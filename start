@@ -1,9 +1,14 @@
 #!/bin/sh
 echo Starting up...
 set -x
+
+./set_root_pw.sh
+
 modprobe -r pn533
 modprobe -r nfc
+
 /etc/init.d/pcscd start
+/etc/init.d/sshd start
 
 cd /SimpleCardAuth
 ./auth-loop.sh 2>&1 | cat
