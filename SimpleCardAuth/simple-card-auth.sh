@@ -13,7 +13,7 @@ TMP_FILE=temporary.tmp
 
 CACHE_DIR=`pwd`/card-cache
 
-STRICT_CHECK=0
+STRICT_CHECK=1
 KEY_ID=4
 RAND_FILE=/dev/urandom
 STDERR=/dev/null
