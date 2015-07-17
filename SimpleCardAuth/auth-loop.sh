@@ -11,7 +11,7 @@ access_denied() {
 
 	# Beep three times with red LED to indicate failure
 	opensc-tool --send-apdu FF:00:40:5D:04:01:01:03:01 > /dev/null 2> /dev/null
-	
+
 }
 
 access_granted() {
